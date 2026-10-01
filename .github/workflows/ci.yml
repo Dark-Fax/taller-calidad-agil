@@ -1,0 +1,19 @@
+name: CI de calidad
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  calidad:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configurar Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+      - name: Pruebas y puerta de calidad (cobertura mínima 80 %)
+        run: pytest --cov=src --cov-fail-under=80
